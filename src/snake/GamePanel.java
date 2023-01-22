@@ -99,8 +99,33 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    public void checkCollisions(){
+    public void checkCollisions(){ // game over
+        // checks if head collides with body
+        for(int i = bodyParts; i > 0; i--){
+            if((x[0] == x[i]) && (y[0] == y[i])){
+                running = false;
+            }
+        }
+        // checks if head touches left border:
+        if(x[0] < 0){
+            running = false;
+        }
+        // checks if head touches right border:
+        if(x[0] > SCREEN_WIDTH){
+            running = false;
+        }
+        // checks if head touches top border:
+        if(y[0] < 0){
+            running = false;
+        }
+        // checks if head touches bottom border:
+        if(y[0] > SCREEN_HEIGHT){
+            running = false;
+        }
 
+        if(!running){
+            timer.stop();
+        }
     }
 
     public void gameOver(Graphics g){
