@@ -26,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener {
     //direction:
     char direction = 'R'; // Right  (ENUM?)
     boolean running = false;
+    boolean pause = false;
     // Timer, Random:
     Timer timer;
     Random random;
@@ -185,6 +186,16 @@ public class GamePanel extends JPanel implements ActionListener {
                     if(direction != 'U'){
                         direction = 'D';
                     }
+                    break;
+                case KeyEvent.VK_P:
+                    if(!pause){
+                        timer.stop();
+                        pause = true;
+                    } else {
+                        timer.start();
+                        pause = false;
+                    }
+
                     break;
 
             }
