@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_HEIGHT = 600;
     static final int UNIT_SIZE = 25;
     static final int GAME_UNIT = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
-    static final int DELAY = 75;
+    static final int DELAY = 150; // nehézség/gyorsaság
     //all x and y coordinates of the snake:
     final int x[] = new int[GAME_UNIT];
     final int y[] = new int[GAME_UNIT];
@@ -86,7 +86,7 @@ public class GamePanel extends JPanel implements ActionListener {
             y[i] = y[i-1];
         }
 
-        switch (direction){
+        switch (direction){ // x[0], y[0] position of the head of the sneak
             case 'U': y[0] = y[0] - UNIT_SIZE; break;
             case 'D': y[0] = y[0] + UNIT_SIZE; break;
             case 'L': x[0] = x[0] - UNIT_SIZE; break;
@@ -96,7 +96,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void checkApple(){
-
+        // checks snake head and apple position:
+        if((x[0] == appleX && y[0] == appleY)){
+            bodyParts++;
+            applesEaten++;
+            newApple();
+        }
     }
 
     public void checkCollisions(){ // game over
@@ -145,7 +150,29 @@ public class GamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter{
         @Override
         public void keyPressed (KeyEvent e){
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_LEFT :
+                    if(direction != 'R'){
+                        direction = 'L';
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if(direction != 'L'){
+                        direction = 'R';
+                    }
+                    break;
+                case KeyEvent.VK_UP :
+                    if(direction != 'D'){
+                        direction = 'U';
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if(direction != 'U'){
+                        direction = 'D';
+                    }
+                    break;
 
+            }
         }
     }
 }
