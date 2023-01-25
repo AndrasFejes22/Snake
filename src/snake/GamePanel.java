@@ -8,6 +8,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+/**
+ * Need to improve:
+ *  1.: adjust game difficulty, eg. "easy", "hard" and so on.
+ *  2.: save individual records
+ */
+
 public class GamePanel extends JPanel implements ActionListener {
 
     static final int SCREEN_WIDTH = 600;
@@ -24,7 +30,8 @@ public class GamePanel extends JPanel implements ActionListener {
     int appleX;
     int appleY;
     //direction:
-    char direction = 'R'; // Right  (ENUM?)
+    //char direction = 'R'; // Right  (ENUM?)
+    Direction direction = Direction.DOWN;
     boolean running = false;
     boolean pause = false;
     // Timer, Random:
@@ -55,10 +62,12 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw (Graphics g){
         if(running) {
             // create a grid for better visual:
+            /*
             for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
                 g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
                 g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
+            */
             // draw apple:
             g.setColor(Color.red);
             g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
@@ -98,10 +107,10 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         switch (direction){ // x[0], y[0] position of the head of the sneak
-            case 'U': y[0] = y[0] - UNIT_SIZE; break;
-            case 'D': y[0] = y[0] + UNIT_SIZE; break;
-            case 'L': x[0] = x[0] - UNIT_SIZE; break;
-            case 'R': x[0] = x[0] + UNIT_SIZE; break;
+            case UP: y[0] = y[0] - UNIT_SIZE; break;
+            case DOWN: y[0] = y[0] + UNIT_SIZE; break;
+            case LEFT: x[0] = x[0] - UNIT_SIZE; break;
+            case RIGHT: x[0] = x[0] + UNIT_SIZE; break;
 
         }
     }
@@ -168,23 +177,23 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed (KeyEvent e){
             switch (e.getKeyCode()){
                 case KeyEvent.VK_LEFT :
-                    if(direction != 'R'){
-                        direction = 'L';
+                    if(direction != Direction.UP){
+                        direction = Direction.LEFT;
                     }
                     break;
                 case KeyEvent.VK_RIGHT:
-                    if(direction != 'L'){
-                        direction = 'R';
+                    if(direction != Direction.LEFT){
+                        direction = Direction.RIGHT;
                     }
                     break;
                 case KeyEvent.VK_UP :
-                    if(direction != 'D'){
-                        direction = 'U';
+                    if(direction != Direction.DOWN){
+                        direction = Direction.UP;
                     }
                     break;
                 case KeyEvent.VK_DOWN:
-                    if(direction != 'U'){
-                        direction = 'D';
+                    if(direction != Direction.UP){
+                        direction = Direction.DOWN;
                     }
                     break;
                 case KeyEvent.VK_P:
